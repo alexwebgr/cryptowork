@@ -24,8 +24,6 @@ class CryptoWorkService
     res.body
   end
 
-  public
-
   def currencies(convert_to = nil)
     endpoint = [BASE_URL, API_VERSION, ENDPOINTS[:currencies]].join('/')
     params = {
@@ -37,6 +35,8 @@ class CryptoWorkService
 
     [endpoint, URI.encode_www_form(params)].join('?')
   end
+
+  public
 
   def list_tickers
     make_call(currencies)
@@ -61,9 +61,10 @@ class CryptoWorkService
   # source_currency: String, the currency id we want to compare, like BTC
   # target_currency: String, the currency id we want to against, like ETH
   def compare_to(target_currency)
-    source = CryptoWorkService.new([tickers[0]]).list_tickers_filtered(['price'])
-    target = CryptoWorkService.new([target_currency]).list_tickers_filtered(['price'])
+    total = CryptoWorkService.new([tickers[0], target_currency]).list_tickers_filtered(['price'])
+    source = total[0]['price']
+    target = total[1]['price']
 
-    { message: "1#{tickers[0]} is worth #{source[0]['price'].to_f / target[0]['price'].to_f}#{target_currency}" }
+    { message: "1#{tickers[0]} is worth #{source.to_f / target.to_f}#{target_currency}" }
   end
 end

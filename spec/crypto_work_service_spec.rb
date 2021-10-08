@@ -100,15 +100,12 @@ RSpec.describe CryptoWorkService, type: :service do
       let(:target_currency) { 'ETH' }
 
       it 'returns the exchange rate between the currencies' do
-        btc = file_fixture('nomics_valid_response_currencies_tickers_btc.json').read
-        eth = file_fixture('nomics_valid_response_currencies_tickers_eth.json').read
+        btc = file_fixture('nomics_valid_response_currencies_tickers_compare.json').read
 
-        stub_request(:get, "https://api.nomics.com/v1/currencies/ticker?ids=BTC&key=#{described_class::NOMICS_API_KEY}").
+        stub_request(:get, "https://api.nomics.com/v1/currencies/ticker?ids=BTC,ETH&key=#{described_class::NOMICS_API_KEY}").
           to_return(status: 200, body: btc)
-        stub_request(:get, "https://api.nomics.com/v1/currencies/ticker?ids=ETH&key=#{described_class::NOMICS_API_KEY}").
-          to_return(status: 200, body: eth)
 
-        expect(described_class.new(valid_tickers).compare_to(target_currency)).to eq({:message=>"1BTC is worth 15.321655965735104ETH"})
+        expect(described_class.new(valid_tickers).compare_to(target_currency)).to eq({:message=>"1BTC is worth 15.185177018117594ETH"})
       end
     end
   end

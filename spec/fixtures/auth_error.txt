@@ -1,0 +1,1 @@
+Authentication failed. We couldn't find an API key in the request. See our documentation at docs.nomics.com for details.

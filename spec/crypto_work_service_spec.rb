@@ -36,7 +36,8 @@ RSpec.describe CryptoWorkService, type: :service do
       let(:valid_tickers) { %w[BTC XRP ETH] }
 
       it 'returns an error' do
-        expected_response = "Authentication failed. We couldn't find an API key in the request. See our documentation at docs.nomics.com for details.\n"
+        expected_response = file_fixture('auth_error.txt').read
+
         stub_request(:get, "https://api.nomics.com/v1/currencies/ticker").
           with(
             query: hash_including({ids: valid_tickers.join(',')})

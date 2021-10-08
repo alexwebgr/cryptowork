@@ -62,6 +62,20 @@ RSpec.describe CryptoWorkService, type: :service do
         expect(described_class.new(valid_tickers).list_tickers_filtered(fields).to_json).to eq expected_response
       end
     end
+
+    describe 'when the usage quota has been reached' do
+      let(:valid_tickers) { %w[BTC XRP ETH] }
+      let(:fields) { %w[symbol name circulating_supply price max_supply] }
+
+      it 'returns an array with the full payload' do
+        expected_response = file_fixture('quota_error.txt').read
+
+        stub_request(:get, "https://api.nomics.com/v1/currencies/ticker?ids=#{valid_tickers.join(',')}&key=#{described_class::NOMICS_API_KEY}").
+          to_return(status: 429, body: expected_response)
+
+        expect(described_class.new(valid_tickers).list_tickers_filtered(fields)).to eq({ error: "809: unexpected token at '#{expected_response}'" })
+      end
+    end
   end
 
   describe '#convert_to' do

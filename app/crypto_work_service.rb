@@ -50,7 +50,6 @@ class CryptoWorkService
 
   rescue JSON::ParserError => e
     # log the error to the error monitoring app like rollbar
-    p e.message
     { error: e.message }
   end
 
@@ -61,7 +60,6 @@ class CryptoWorkService
 
   # source_currency: String, the currency id we want to compare, like BTC
   # target_currency: String, the currency id we want to against, like ETH
-
   def compare_to(target_currency)
     source = CryptoWorkService.new([tickers[0]]).list_tickers_filtered(['price'])
     target = CryptoWorkService.new([target_currency]).list_tickers_filtered(['price'])

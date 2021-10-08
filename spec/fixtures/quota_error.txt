@@ -1,0 +1,1 @@
+Nomics.com’s free plan allows for 1 request / second. Please contact sales@nomics.com if you’d like an upgraded rate limit.

@@ -1,0 +1,27 @@
+<h2>CryptoWork</h2>
+
+<p>
+  Retrieve cryptocurrency exchange rates
+</p>
+
+<h3>Features</h3>
+
+<ul>
+  <li>
+    Retrieve a list of cryptocurrencies given set of tickers. e.g.['BTC', 'XRP', 'ETH']
+    <a href="/list_tickers?tickers=BTC,ETH" target="_blank">list_tickers</a>
+  </li>
+  <li>
+    Retrieve a list of specific cryptocurrencies and specific values based on the ticker and any
+    other dynamic params e.g. [circulating_supply, max_supply, name, symbol, price] for [ETH, BTC]
+    <a href="/list_tickers_filtered?tickers=BTC,ETH&fields=id,name,price" target="_blank">list_tickers_filtered</a>
+  </li>
+  <li>
+    Retrieve a specific cryptocurrency to specific fiat. e.g. BTC in ZAR or ETH in USD
+    <a href="/convert_to?tickers=BTC,ETH&tc=EUR" target="_blank">convert_to</a>
+  </li>
+  <li>
+    Calculate the price of one cryptocurrency from another, in relation to their dollar value e.g. 1BTC = 100USD, 1ETH = 50USD, therefore 1ETH == 0.5BTC
+    <a href="/compare?tickers=ETH&tc=XRP" target="_blank">compare</a>
+  </li>
+</ul>
